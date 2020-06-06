@@ -1,7 +1,9 @@
 <% layout('layouts/boilerplate')-%>
 <h1>Posts</h1>
+<% include ../partials/paginatePosts %>
+
 <div>
-<%posts.forEach(post =>{%>
+<% posts.docs.forEach(post =>{ %>
 	<div>
 		<h2><%= post.title %></h2>
 		<div><%= post.price %></div>
@@ -9,6 +11,7 @@
 		<div><%= post.location %></div>
 		<div><a href="/posts/<%=post.id%>">Show more</a></div>
 	</div>
-<%})%>
+<% }); %>
 	
 </div>
+<% include ../partials/paginatePosts %>

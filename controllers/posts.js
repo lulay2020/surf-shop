@@ -10,7 +10,11 @@ cloudinary.config({
 
 module.exports = {
 	async postIndex (req, res, next){
-		let posts = await Post.find({});
+		let posts = await Post.paginate({}, {
+			page: req.query.page || 1,
+			limit: 10
+		});
+		posts.page = Number(posts.page);
 		res.render('posts/index', { posts, title: 'Posts index' })
 	},
 
@@ -43,14 +47,14 @@ module.exports = {
 	async postShow(req, res, next){
 		let post = await Post.findById( req.params.id ).populate({
 			path: 'reviews',
-			options: { sort: {'_id': -1},
+			options: { sort: {'_id': -1} },
 			populate: {
 				path: 'author',
 				model: 'User'
 			}
-		}
 		});
-		res.render('posts/show', { post });
+		const floorRating = post.calculateAvgRating();
+		res.render('posts/show', { post, floorRating });
 	},
 
 	async postEdit(req, res, next){
