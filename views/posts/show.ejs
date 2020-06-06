@@ -1,41 +1,10 @@
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css' rel='stylesheet' />
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-      }
-
-      #map {
-        width: 350px;
-        height: 200px;
-    }
-
-      .marker {
-		background-image: url('/images/mapbox-icon.png');
-		background-size: cover;
-		width: 50px;
-		height: 50px;
-		border-radius: 50%;
-		cursor: pointer;
-	}
-
-	.mapboxgl-popup {
-	  	max-width: 200px;
-	}
-
-	.mapboxgl-popup-content {
-		text-align: center;
-		font-family: 'Open Sans', sans-serif;
-	}
-    </style>
+<% layout('layouts/post-show-layout')-%>
 <h1><%=post.title %></h1>
 <div><%=post.price%></div>
 <div><%=post.description%></div>
 <div><%=post.location%></div>
 <div>
-	<% post.images.forEach((image)=>{%>
+	<% post.images.forEach(image=>{%>
 	<img src="<%= image.url %>" alt="Surf board image" width="200px">
 	<%});%>
 </div>
@@ -49,26 +18,64 @@
 	</form>
 </div>
 
-<script>
-let post = <%- JSON.stringify(post)%>;
-mapboxgl.accessToken = 'pk.eyJ1IjoibjIwYXdhbCIsImEiOiJjazl3OGN1dzgwMzg0M2xweG53ZGJkaXQwIn0.kg0wmihEkTHcnYqf_mrJeA';
+<h2>Create a Review</h2>
+<form method="POST" action="/posts/<%= post.id %>/reviews">
+	<textarea name="review[body]" required></textarea>
+	<fieldset class="starability-basic">
+	  	<legend>Rating:</legend>
+	  	<button class="clear-rating" type="button">Clear Rating</button>
+		<input type="radio" id="rate0" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." />
+	  	<input type="radio" id="rate1" name="review[rating]" value="1" />
+	  	<label for="rate1" title="Terrible">1 star</label>
+	  	<input type="radio" id="rate2" name="review[rating]" value="2" />
+	  	<label for="rate2" title="Not good">2 stars</label>
+	  	<input type="radio" id="rate3" name="review[rating]" value="3" />
+	  	<label for="rate3" title="Average">3 stars</label>
+	  	<input type="radio" id="rate4" name="review[rating]" value="4" />
+	  	<label for="rate4" title="Very good">4 stars</label>
+		<input type="radio" id="rate5" name="review[rating]" value="5" />
+		<label for="rate5" title="Amazing">5 stars</label>
+	</fieldset>
+	<input type="submit">
+</form>
 
-var map = new mapboxgl.Map({
-  container: 'map',
-  style: 'mapbox://styles/mapbox/light-v10',
-  center: post.coordinates,
-  zoom: 5
-});
-
-// create a HTML element for location/marker
-var el = document.createElement('div');
-el.className = 'marker';
-
-// make a marker for our location and add it to the map
-new mapboxgl.Marker(el)
-  	.setLngLat(post.coordinates)
-  	.setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-  	.setHTML('<h3>' + post.title + '</h3><p>' + post.location + '</p>'))
-  	.addTo(map);
-
-</script>
+<!-- display reviews -->
+<h3>Reviews</h3>
+<% post.reviews.forEach(function(review){%>
+	<div>
+		Author: <%= review.author.username%><br>
+		<%= review.body %><br>
+		- Rating: <%= review.rating %>
+	</div>
+	<% if(review.author.equals(currentUser._id)){ %>
+	<div>
+		<button class="toggle-edit-form">Edit</button>
+		<form action="/posts/<%= post.id %>/reviews/<%= review.id %>?_method=PUT" method="POST" class="edit-review-form">
+			<textarea name="review[body]" required><%= review.body %></textarea>
+			<fieldset class="starability-basic">
+			  	<legend>Rating:</legend>
+			  	<button class="clear-rating" type="button">Clear Rating</button>
+			  	<input type="radio" id="edit-rate0" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." />
+			  	<input type="radio" id="edit-rate1" name="review[rating]" value="1" />
+			  	<label for="edit-rate1" title="Terrible">1 star</label>
+			  	<input type="radio" id="edit-rate2" name="review[rating]" value="2" />
+			  	<label for="edit-rate2" title="Not good">2 stars</label>
+			  	<input type="radio" id="edit-rate3" name="review[rating]" value="3" />
+			  	<label for="edit-rate3" title="Average">3 stars</label>
+			  	<input type="radio" id="edit-rate4" name="review[rating]" value="4" />
+			  	<label for="edit-rate4" title="Very good">4 stars</label>
+			  	<input type="radio" id="edit-rate5" name="review[rating]" value="5" />
+			  	<label for="edit-rate5" title="Amazing">5 stars</label>
+			</fieldset>
+			<input type="submit" value="Update">
+		</form>
+		<script>
+			$('#edit-rate<%= review.rating %>').prop('checked', true);
+		</script>
+		<form action="/posts/<%= post.id %>/reviews/<%= review.id %>?_method=DELETE" method="POST">
+			<input type="submit" value="Delete">
+		</form>
+	</div>
+	<% } %>
+	<hr>
+<% }); %>
