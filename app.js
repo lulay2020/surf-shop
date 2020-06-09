@@ -5,7 +5,6 @@ const engine = require('ejs-mate');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const bodyParser = require('body-parser');
 const passport = require('passport');
 const User = require('./models/user');
 const session = require('express-session');
@@ -13,6 +12,7 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 // const seedPosts = require('./seeds');
 // seedPosts();
+
 // require routes
 const indexRouter = require('./routes/index');
 const postsRouter = require('./routes/posts');
@@ -23,9 +23,10 @@ const app = express();
 // connect to database
 mongoose.connect('mongodb://localhost:27017/surf-shop', {
 		useNewUrlParser: true, 
-		useUnifiedTopology: true
-	});
-mongoose.set('useCreateIndex', true);
+		useUnifiedTopology: true,
+    useCreateIndex: true,
+});
+
 const db = mongoose.connection;
 
 // check if database connected
@@ -43,8 +44,8 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
@@ -66,10 +67,10 @@ app.use(passport.session());
 
 // set local variables middleware
 app.use(function(req, res, next){
-  req.user = {
-    _id : '5ed620ed5fd0900b60da2d6e',
-    username : 'n20awal'
-  }
+  // req.user = {
+  //   _id : '5ed620ed5fd0900b60da2d6e',
+  //   username : 'n20awal'
+  // }
   res.locals.currentUser = req.user;
   // set default page title
   res.locals.title = 'Surf Shop';
