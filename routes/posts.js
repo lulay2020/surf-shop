@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const { cloudinary, storage } = require('../cloudinary');
+const { storage } = require('../cloudinary');
 const upload = multer({ storage });
 const { asyncErrHandler, isLoggedIn, isAuthor } = require('../middlewares');
 const { 
 	postIndex, 
-	postNew, 
+	postNew,
 	postCreate, 
 	postShow,
 	postEdit,

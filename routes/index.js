@@ -1,13 +1,28 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+const { storage } = require('../cloudinary');
+const upload = multer({ storage });
 const { 
 	landingPage,
 	getRegister, 
 	postRegister,
 	getLogin, 
 	postLogin, 
-	getLogout } = require('../controllers');
-const { asyncErrHandler } = require('../middlewares');
+	getLogout,
+	getProfile,
+	updateProfile,
+	getForgotPw,
+	putForgotPw,
+	getReset,
+	putReset
+} = require('../controllers');
+const {
+	asyncErrHandler, 
+	isLoggedIn,
+	isValidPassword,
+	changePassword
+} = require('../middlewares');
 
 /* GET home/landing page. */
 router.get('/', asyncErrHandler(landingPage));
@@ -17,7 +32,7 @@ router.get('/', asyncErrHandler(landingPage));
 router.get('/register', getRegister);
 
 /* POST /register */
-router.post('/register', asyncErrHandler(postRegister));
+router.post('/register', upload.single('image'), asyncErrHandler(postRegister));
 
 /* GET /login */
 router.get('/login', getLogin);
@@ -29,33 +44,27 @@ router.post('/login', asyncErrHandler(postLogin));
 router.get('/logout', getLogout);
 
 /* GET /profile */
-router.get('/profile', (req, res, next)=> {
-  res.send('GET /profile');
-});
+router.get('/profile', isLoggedIn, asyncErrHandler(getProfile));
 
 /* PUT /profile */
-router.put('/profile/:user_id', (req, res, next)=> {
-  res.send('PUT /profile/:user_id');
-});
+router.put('/profile',
+	isLoggedIn,
+	upload.single('image'),
+	asyncErrHandler(isValidPassword),
+	asyncErrHandler(changePassword),
+	asyncErrHandler(updateProfile)
+);
 
 /* GET /forgot */
-router.get('/forgot', (req, res, next)=> {
-  res.send('GET /forgot');
-});
+router.get('/forgot-password', getForgotPw);
 
 /* PUT /forgot */
-router.put('/forgot', (req, res, next)=> {
-  res.send('PUT /forgot');
-});
+router.put('/forgot-password', asyncErrHandler(putForgotPw));
 
 /* GET /reset/:token */
-router.get('reset/:token', (req, res, next)=> {
-  res.send('GET /reset/:token');
-});
+router.get('/reset/:token', asyncErrHandler(getReset));
 
 /* PUT /reset/:token */
-router.put('reset/:token', (req, res, next)=> {
-  res.send('PUT /reset/:token');
-});
+router.put('/reset/:token', asyncErrHandler(putReset));
 
 module.exports = router;
