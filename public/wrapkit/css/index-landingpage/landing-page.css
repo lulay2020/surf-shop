@@ -1,0 +1,128 @@
+/*
+Template Name: Wrapkit
+Author: wrappixel
+Email: niravjoshi87@gmail.com
+File: scss
+*/
+/*Theme Colors*/
+/*bootstrap Color*/
+/*Light colors*/
+/*Normal Color*/
+/*Extra Variable*/
+/*Gradiant*/
+/*******************
+topbar color
+*******************/
+.topbar.fixed-header {
+  background: #263238; }
+
+/*******************
+Static slide 10
+*******************/
+.static-slider-head {
+  min-height: 680px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  overflow: auto;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url('/images/banner.jpeg'); 
+  background-size: cover;
+  background-position: center center; }
+  .static-slider-head .title {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 3rem;
+    line-height: 100px; }
+  .static-slider-head .subtitle {
+    color: #ffffff;
+    line-height: 30px; }
+
+/*******************
+Header 1
+*******************/
+.h1-nav {
+  padding: 15px 0; }
+  .h1-nav .navbar-nav .nav-item {
+    margin: 0 20px; }
+    .h1-nav .navbar-nav .nav-item .nav-link {
+      padding: 12px 0px;
+      color: #8d97ad;
+      font-weight: 400; }
+      .h1-nav .navbar-nav .nav-item .nav-link:hover {
+        color: #2cdd9b; }
+    .h1-nav .navbar-nav .nav-item:last-child {
+      margin-right: 0px; }
+
+/*******************
+Header 2
+*******************/
+.h2-nav {
+  padding: 15px 0; }
+  .h2-nav .navbar-nav .nav-item {
+    margin: 0 20px; }
+    .h2-nav .navbar-nav .nav-item .nav-link {
+      padding: 12px 0px;
+      color: #ffffff;
+      font-weight: 400; }
+      .h2-nav .navbar-nav .nav-item .nav-link:hover {
+        color: #188ef4; }
+    .h2-nav .navbar-nav .nav-item:last-child {
+      margin-right: 0px; }
+
+/*******************
+Static slide 10
+*******************/
+.static-slider10 {
+  padding: 10% 0;
+  background-size: cover;
+  background-position: center center; }
+  .static-slider10 .title {
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 50px; }
+  .static-slider10 .subtitle {
+    color: #ffffff; }
+
+@media (max-width: 900px) {
+  .static-slider10 .title {
+    font-size: 40px;
+    line-height: 45px; } }
+
+/*******************
+Static slide 3
+*******************/
+.static-slider3 {
+  padding: 10% 0; }
+  .static-slider3 h1 {
+    font-weight: 300;
+    line-height: 50px; }
+    .static-slider3 h1 span {
+      border-bottom: 3px solid #2cdd9b; }
+
+@media (max-width: 767px) {
+  .static-slider3 h1 {
+    line-height: 30px;
+    font-size: 24px; } }
+
+
+/*******************
+Responsive
+*******************/
+@media (max-width: 1024px) {
+  .static-slider10 .title {
+    font-size: 60px;
+    line-height: 60px; }
+  .topbar {
+    background: #263238; } }

@@ -1,20 +1,6 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
-}
-
-#map{
-	width: 100%;
-	height: 500px;
-}
-
-.mapboxgl-popup{
-	max-width: 400px;
-	font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+/*GLOBAL & CUSTOM STYLES*/
+body{
+	height: 100vh;
 }
 
 .color-green{
@@ -25,7 +11,146 @@ a {
 	color: red;
 }
 
+/*OVERRIDING THEME STYLES*/
+.p-5{
+	padding: 2rem !important;
+}
+
+.btn-warning {
+	color: #000;
+}
+	/*OVERRIDING FOOTER THEME STYLES*/
+	.footer4{
+		background-color: #000;
+		padding: 1.6em;
+		color: #fff;
+	}
+
+	h5.m-b-20, 
+	a.link, 
+	.f4-bottom-bar 
+	a.p-10{
+		color: #fff;	
+	}
+
+/*SIMPLE NAV STYLES*/
+
+.navbar.simple-nav{
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  padding: .4rem .51rem;
+}
+
+#nav-links{
+  position: absolute;
+  z-index: 4;
+}
+
+/*USER PROFILE IMAGE STYLES*/
+
+.circle.big{
+  width: 50px;
+  height: 50px;
+}
+
+.circle.medium{
+  width: 35px;
+  height: 35px
+}
+
+.circle{
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+}
+
 .profile-image{
-	width: 100px;
-	border-radius: 50%;
+	width: 210px;
+	height: 200px;
+}
+
+/*MAIN NAVBAR LOGO*/
+
+.logo{
+	color: #fff;
+}
+
+.logo:hover{
+	color: #fff;
+}
+
+/*MAP & MAP POP UP STYLES*/
+#map{
+	width: 100%;
+	height: 500px;
+  	border-radius: 7px;
+}
+
+.mapboxgl-popup{
+	max-width: 400px;
+	font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+.card.bg-light,
+#map{
+	box-shadow: 10px 33px 91px -23px #b8b8b8;
+}
+
+
+/*REGISTER & LOGIN PAGE STYLES*/
+
+.container.form{
+	min-height: 100%;
+}
+
+.form-card{
+	margin: 1em;
+	letter-spacing: 1px;
+}
+
+.card-img-overlay,
+.card-img-overlay h1{
+	color: #fff;
+
+}
+
+.card-img-overlay h1,
+.card-title{
+	font-size: 1.36em;
+	font-weight: 600;
+}
+
+.card-img-overlay p{
+	font-size: 1em;
+}
+
+/*STYLES TO BE IMPLEMENTED ON SCREEN SIZES GREATER THAN 700PX*/
+@media(min-width: 700px){
+	.form-card{
+		height: 80%;
+	}
+
+	.form-card .row{
+		height: 100%;
+	}
+
+	.card-body{
+		padding-right: 3em;
+	}
+
+	.navbar.simple-nav{
+	  	padding: .5rem 1rem;
+	}
+
+	.card-img{
+		height: 100%;
+	}
+
+	/*FORGOT & RESET STYLES*/
+
+	.form-card.reset{
+		width: 60%;
+	}
 }

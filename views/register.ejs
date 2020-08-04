@@ -1,20 +1,84 @@
 <% layout('layouts/boilerplate')-%>
-<form action="/register" method="POST" enctype="multipart/form-data">
-	<div>
-		<label for="username">Username:</label>
-		<input type="text" name="username" id="username" placeholder="Username" value="<%= username %>" required="">
-	</div>
-	<div>
-		<label for="password">Password</label>
-		<input type="password" name="password" placeholder="password" id="password" required="">
-	</div>
-	<div>
-		<label for="email">Email:</label>
-		<input type="email" id="email" name="email" placeholder="email" value="<%= email %>" required>
-	</div>
-	<div>
-		<label for="image">Image:</label>
-		<input type="file" id="image" name="image">
-	</div>
-	<input type="submit">
-</form>
+
+<div class="container form d-flex align-items-center my-4">
+  <div class="card bg-light form-card">
+  	<% include ./partials/flash-messages %>
+    <div class="row">
+      <div class="col-md-5">
+        <img src="/images/sea.jpeg" class="card-img" alt="sea">
+        <div class="card-img-overlay d-flex flex-column justify-content-center text-center py-5">
+        	<h1>Welcome To Surf Shop</h1>
+        	<p>A place where you can buy, sell and rent Surf-boards</p>
+    		</div>
+      </div>
+      <div class="col-md-7 d-flex align-items-center">
+        <div class="card-body">
+          <h1 class="card-title">Sign Up</h1>
+          <form 
+            action="/register" 
+            method="POST" 
+            enctype="multipart/form-data" 
+            class="d-flex flex-column justify-content-around"
+          >
+          	<div class="form-group">
+  	        	<label for="username">Username</label>
+      				<input 
+                type="text" 
+                name="username" 
+                id="username" 
+                placeholder="user1" 
+                value="<%= username %>" 
+                required 
+                class="form-control">	
+          	</div>
+          	
+          	<div class="form-group">
+      				<label for="email">Email</label>
+      				<input 
+                type="email" 
+                id="email" 
+                name="email" 
+                placeholder="user123@example.com" 
+                value="<%= email %>" 
+                class="form-control" 
+                required
+              >
+      			</div>
+          	<div class="form-group">
+      				<label for="password">Password</label>
+      				<input 
+                type="password" 
+                name="password" 
+                placeholder="6 characters or more" 
+                id="password" 
+                class="form-control" 
+                required
+              >
+      			</div>
+          	<div class="form-group">
+      				<label for="image">Image</label>
+      				<br>
+      				<input 
+                type="file" 
+                id="image" 
+                name="image"
+              >
+      			</div>
+            <div id="validation-message"></div>
+      			<div class="my-3">
+      				<input 
+                type="submit" 
+                value="Sign Up!"
+                disabled 
+                class="btn btn-warning btn-block my-3"
+                id='submit-btn'>
+      			</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="/scripts/checkPassword.js"></script>
+
+

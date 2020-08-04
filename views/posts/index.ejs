@@ -1,20 +1,55 @@
-<% layout('layouts/boilerplate')-%>
-<h1>Posts</h1>
-<% include ../partials/paginatePosts %>
-<div id="map"></div>
-<div>
-<% posts.docs.forEach(post =>{ %>
-	<div>
-		<h2><%= post.title %></h2>
-		<div><%= post.price %></div>
-		<div><%= post.description %></div>
-		<div><%= post.location %></div>
-		<div><a href="/posts/<%=post.id%>">Show more</a></div>
+<% layout('layouts/post-index')-%>
+<div class="container p-5">
+	<div class="row">
+		<div class="col-12">
+			<div class="my-5 text-center">
+				<% include ../partials/flash-messages %>
+				<h2 class="title">Surfboard Stores</h2>
+	    		<h6 class="subtitle">Find the nearest Store to your location</h6>
+				<div id="map" class="my-5"></div>
+			</div>
+		</div>
 	</div>
-<% }); %>
 	
-</div>
-<% include ../partials/paginatePosts %>
+	<h2 class="title">Latest Posts</h2>
+	<% posts.docs.forEach(post =>{ %>
+	<div class="card m-3">
+		<div class="row blog-home2">
+			<div class="col-md-4 p-0">
+				<a href="/posts/<%=post.id%>">
+					<img src="<%= post.images[0].url %>" class="card-img">
+				</a>
+				<div class="date-pos bg-success-gradiant"><%= moment(post.date).format('MMM') %>
+				    <span><%= moment(post.date).format('D') %></span>
+				</div>
+			</div>
+			<div class="col-md-8">
+				<div class="card-body">
+					<a href="/posts/<%=post.id%>">
+						<h2 class="card-title"><%= post.title %></h2>
+						<div>Price: <%= post.price %></div>
+						<div><%= post.description.substring(0, 100) %>...</div>
+						<p><%= post.location %></p>
+					</a>
+					<a href="/posts/<%=post.id%>" class="linking text-themecolor my-1">
+						Show more<i class="ti-arrow-right"></i>
+					</a>
+					<div class="user-info my-3">
+						<span class="thumb-img">
+							<img src="<%= post.author.image.secure_url %>" class="circle big">
+						</span>
+						<div>
+							<h6 class="m-0"><%= post.author.username %></h6>
+							<small><%=moment(post.date).fromNow()%></small>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
+	</div>
+	<% }); %>
+	<% include ../partials/paginatePosts %>   
+</div> <!-- container -->
 
 <script>
 	mapboxgl.accessToken = "<%= mapBoxToken %>";

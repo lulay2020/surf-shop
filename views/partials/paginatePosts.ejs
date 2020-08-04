@@ -1,13 +1,28 @@
-<div style="margin: 20px 0">
+<nav aria-label="Page navigation example">
+	<ul class="pagination">
 	<% if(posts.page - 1) {%>
-		<a href="/posts?page=<%= posts.page - 1 %>">Prev</a>
+	<li class="page-item">
+		<a href="<%= paginateUrl %><%= posts.page - 1 %>" class="page-link" aria-label="Previous">
+			<span aria-hidden="true">&laquo;</span>
+        	<span class="sr-only">Previous</span>
+		</a>
+	</li>
 	<% } %>
-	<% for(let i = 1; i <= posts.pages; i++){ %>
-		<a href="/posts?page=<%= i %>"
-		   style="<%= i === posts.page ? 'color:#000;' : ''%>"
-			><%= i %></a>
+	<% if(posts.pages > 1 && posts.docs.length) { %>
+	<% for(let i = start; i < end; i++){ %>
+		<li class="page-item <%= i === posts.page ? 'active' : ''%>">
+			<a 	href="<%= paginateUrl %><%= i %>" 
+				class="page-link"
+			><%= i %>
+			</a>
+		</li>
+	<% } %>
 	<% } %>
 	<% if((posts.page + 1) <= posts.pages) {%>
-		<a href="/posts?page=<%= posts.page + 1 %>">Next</a>
-	<% } %>
-</div>
+		<a href="<%= paginateUrl %><%= posts.page + 1 %>" class="page-link" aria-label="Next">
+			<span aria-hidden="true">&raquo;</span>
+        	<span class="sr-only">Next</span>
+		</a>
+	<% } %>	
+	</ul>
+</nav>

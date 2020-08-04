@@ -6,6 +6,7 @@ async function seedPosts() {
 	await Post.deleteMany({});
 	for(const i of new Array(600)) {
 		const random1000 = Math.floor(Math.random() * 343);
+		const random5 = Math.floor(Math.random() * 6);
 		const title = faker.lorem.word();
 		const description = faker.lorem.text();
 		const postData = {
@@ -16,7 +17,12 @@ async function seedPosts() {
 				type: 'Point',
 				coordinates: [cities[random1000].longitude, cities[random1000].latitude],
 			},
-			author: '5bb27cd1f986d278582aa58c'
+			price: `${random1000}`,
+			avgRating: random5,
+			author: '5ee1f588bc25d512bcdb734b',
+			images: [{
+				url: 'https://res.cloudinary.com/devsprout/image/upload/v1561315599/surf-shop/surfboard.jpg'
+			}]
 		}
 		let post = new Post(postData);
 		post.properties.description = `<strong><a href="/posts/${post._id}">${post.title}</a></strong><p>${post.location}</p><p>${post.description.substring(0, 20)}...</p>`;

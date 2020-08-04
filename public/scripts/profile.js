@@ -1,14 +1,10 @@
-let newPasswordValue;
-let confirmationValue;
 const submitBtn = document.getElementById('update-profile');
 const newPassword = document.getElementById('new-password');
 const confirmation = document.getElementById('password-confirmation');
 const validationMessage = document.getElementById('validation-message');
 
 confirmation.addEventListener('input', e =>{
-	newPasswordValue = newPassword.value;
-	confirmationValue = confirmation.value;
-	if (newPasswordValue !== confirmationValue) {
+	if (newPassword.value !== confirmation.value) {
 		validatePassword('Password must match !', 'color-red', 'color-green');
 		submitBtn.setAttribute('disabled', true);
 	} else {

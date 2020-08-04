@@ -7,7 +7,10 @@ const PostSchema = new Schema({
 	title: String,
 	price: String,
 	description: String,
-	images: [ { url: String, public_id: String } ],
+	images: [ { 
+		url: String,
+		public_id: String 
+	} ],
 	location: String,
 	geometry: {
 		type: {
@@ -31,7 +34,11 @@ const PostSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'Review'
 	}],
-	avgRating: { type: Number, default: 0 }
+	avgRating: { type: Number, default: 0 },
+	date: {
+		type: Date,
+		default: Date.now
+	}
 });
 
 PostSchema.pre('remove', async function() {
@@ -58,5 +65,7 @@ PostSchema.methods.calculateAvgRating = function(){
 }
 
 PostSchema.plugin(mongoosePaginate);
+
+PostSchema.index({ geometry: '2dsphere'});
 
 module.exports = mongoose.model('Post', PostSchema);

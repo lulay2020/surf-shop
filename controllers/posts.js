@@ -6,16 +6,32 @@ const { cloudinary } = require('../cloudinary');
 
 module.exports = {
 	async postIndex (req, res, next){
-		let posts = await Post.paginate({}, {
+		const { dbQuery } = res.locals;
+		delete res.locals.dbQuery;
+
+		let posts = await Post.paginate(dbQuery, {
 			page: req.query.page || 1,
 			limit: 10,
-			sort: '-_id'
+			sort: '-_id',
+			populate: {
+				path: 'author',
+				model: 'User'
+			}
 		});
+		// this was taken from blakeembrey
+		let start = Math.max(1, posts.page - 2);
+		let end = Math.min(start + 5, posts.pages);
+		
 		posts.page = Number(posts.page);
+		if (!posts.docs.length && res.locals.query){
+			res.locals.error = 'No results match that query.';
+		}
 		res.render('posts/index', { 
 			posts,
 			mapBoxToken, 
-			title: 'Posts index'
+			title: 'Posts Index',
+			start,
+			end
 		});
 	},
 
@@ -25,12 +41,16 @@ module.exports = {
 
 	async postCreate (req, res, next){
 		req.body.post.images = [];
+		if (req.files[0] === undefined) {
+			req.body.post.images.push({
+				url: '/images/surfboard.jpeg'
+			});
+		}
 		for(const file of req.files) {
 			req.body.post.images.push({
 				url: file.secure_url,
 				public_id: file.public_id
 			});
-			console.log(req.file);
 		}
 		let response = await geocodingClient
 			.forwardGeocode({
@@ -48,19 +68,31 @@ module.exports = {
 	},
 
 	async postShow(req, res, next){
-		let post = await Post.findById( req.params.id ).populate({
+		let post = await Post.findById( req.params.id ).populate([{
 			path: 'reviews',
 			options: { sort: {'_id': -1} },
 			populate: {
 				path: 'author',
 				model: 'User'
 			}
-		});
-		const floorRating = post.calculateAvgRating();
-		res.render('posts/show', {
-			post, 
-			floorRating,
-		});
+		},{
+			path: 'author',
+			model: 'User'
+			
+		}]);
+		if (!post) {
+			req.session.error = 'Post not found';
+			res.redirect('back');
+		}
+		// const floorRating = post.calculateAvgRating();
+		if (post != null) {
+			const floorRating = post.avgRating;
+			res.render('posts/show', {
+				post, 
+				floorRating,
+			});	
+		}
+		
 	},
 
 	postEdit(req, res, next){
@@ -120,10 +152,12 @@ module.exports = {
 	async postDestroy(req, res, next){
 		const { post } = res.locals;
 		for(const image of post.images){
-			await cloudinary.uploader.destroy(image.public_id);
+			if (image.public_id) {
+				await cloudinary.uploader.destroy(image.public_id);
+			}
 		}
 		await post.deleteOne();
-		req.session.seccess = 'Post deleted successfully';
+		req.session.success = 'Post deleted successfully';
 		res.redirect('/posts');
 	}
 }

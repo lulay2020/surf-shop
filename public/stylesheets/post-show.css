@@ -1,6 +1,131 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800");
+
+body, 
+h1,
+h2,
+h3{
+	color: #000;
+  	font-family: "Montserrat", sans-serif;
+
+}
+
+.user-info{
+  display: flex;
+  align-items: center;
+}
+
+.user-info div{
+  padding-left: .7em;
+}
+
+.footer {
+  	padding: 20px 0;
+  	text-align: center; 
+}
+
+.footer4 .f4-bottom-bar {
+  	padding-top: 10px;
+  	margin-top: 20px; 
+}
+
+.footer4 .f4-bottom-bar a {
+    color: #fff; 
+}
+    
+.footer4 .f4-bottom-bar a:hover {
+   	color: #188ef4;
+}
+
+.footer4 .round-social.light a {
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+}
+  
+.footer4 .round-social.light a:hover {
+    background: #188ef4; 
+}
+
+/*Color reviews' icons*/
+.far.fa-trash-alt{
+  color: red;
+}
+
+.far.fa-edit{
+  color: yellow;
+}
+.spacer {
+  padding: 90px 0; }
+
+html body .m-b-20 {
+  margin-bottom: 20px; }
+
+html body .m-b-30 {
+  margin-bottom: 30px; }
+
+.round-social a {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  display: inline-block;
+  border-radius: 100%;
+  margin: 0 5px;
+  -webkit-transition: 0.2s ease-in;
+  -o-transition: 0.2s ease-in;
+  transition: 0.2s ease-in; }
+  .round-social a:hover {
+    -webkit-transform: translate3d(0px, -5px, 0px);
+    transform: translate3d(0px, -5px, 0px); }
+
+.round-social.light a {
+  color: #263238;
+  background: #f4f8fa; }
+
+.round-social.light a:hover {
+  background: #263238;
+  color: #ffffff; }
+
+a.link {
+  color: #fff; }
+  a.link:hover, a.link:focus {
+    color: #316ce8; }
+
+html body .p-10 {
+  padding: 10px; }
+
+html body .p-l-0 {
+  padding-left: 0px; }
+
+html body .m-t-10 {
+  margin-top: 10px; }
+
+html body .m-b-10 {
+  margin-bottom: 10px; }
+.card.bg-light{
+	box-shadow: 10px 33px 91px -23px #b8b8b8;
+}
+
 #map {
-	width: 350px;
-	height: 200px;
+  border-radius: 7px;
+}
+
+.btn-link{
+	color: #afafaf;
+}
+
+.delete-btn{
+	display: inline;
+}
+
+.yellow .fas, 
+.yellow .fa-star-half-alt,
+.starability-basic input{
+	color: yellow!important;
+}
+
+strong{
+  padding-left: .7em;
 }
 
 .marker {
@@ -21,10 +146,16 @@
 	font-family: 'Open Sans', sans-serif;
 }
 
-.edit-review-form{
-	display: none;
-}
-
 .clear-rating{
 	display: block;
+}
+
+h5 {
+    line-height: 22px;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.footer4 h5,.footer4 p,.footer4 a{
+  font-weight: 300;
 }

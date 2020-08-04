@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <!-- Tell the browser to be responsive to screen width -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title><%= title %></title>
+      <!-- include BS4 -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+      <!-- Theme Styles -->
+      <link rel="stylesheet" href="/wrapkit/css/style.css" />
+      <link rel="stylesheet" href="/wrapkit/css/index-landingpage/landing-page.css" />
+      <!-- custom styles -->
+      <link rel='stylesheet' href='/stylesheets/style.css' />
+      <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css"/>
+      <!-- mapbox links -->
+      <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css' rel='stylesheet' />
+      <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js'></script>
+      <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+      <!-- font awesome kit -->
+      <script src="https://kit.fontawesome.com/01f80c17b9.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+      <!-- Main Wrapper  -->
+    <div id="main-wrapper">
+     <% include ../partials/navbar %>
+      <!-- Page Wrapper  -->
+      <div class="page-wrapper">
+        <!-- Container fluid  -->
+        <div class="container-fluid">
+          <% include ../partials/flash-messages %>
+          <!-- Static Slider 10  -->
+          <div class="static-slider-head">
+            <div class="container">
+              <!-- Row  -->
+              <div class="row justify-content-center">
+                <!-- Column -->
+                <div class="col-lg-8 col-md-6 align-self-center text-center" data-aos="fade-up" data-aos-duration="1200">
+                  <h1 class="title"><i class="fas fa-water"></i> Surf Shop</h1>
+                  <h4 class="subtitle font-light">Buy and Sell Surf Boards</h4> 
+                  <a href="/posts" class="btn btn-outline-light m-r-20 btn-md m-t-30 font-14">Shop</a><a href="/register" class="btn btn-md m-t-30 btn-warning font-14">Sell</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /Container fluid  -->
+      </div>
+      <!-- /Page Wrapper  -->
+
+     <%- body -%>
+      
+     <% include ../partials/footer %>
+    </div>
+    <!-- /Main Wrapper  -->
+
+
+    <!-- jQuery & Bootstrap Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- theme scripts -->
+    <script src="/wrapkit/js/custom.min.js"></script>
+
+  </body>
+</html>

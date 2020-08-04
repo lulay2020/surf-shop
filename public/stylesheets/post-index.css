@@ -1,0 +1,76 @@
+h6{
+  margin: 0;
+}
+
+.user-info{
+  display: flex;
+  align-items: center;
+}
+
+.user-info div{
+  padding-left: .7em;
+}
+
+
+/*search form style*/
+.filter-form{
+    position: fixed;
+    bottom: 0;
+    height: 90vh;
+    overflow-y: scroll;
+}
+
+form{
+  font-size: 1rem;
+  padding-right: 1em;
+}
+
+legend{
+  font-size: 1rem;
+  padding: .46em;
+  font-weight: bold;
+}
+
+fieldset{
+  margin: 1em 0;
+  padding: 1em;
+
+}
+
+fieldset label{
+  font-size: 0.8rem;
+}
+
+.form-control {
+    font-size: .8rem;
+}
+
+.dropdown-menu {
+    min-width: max-content;
+}
+
+.card-body{
+  display: flex;
+  height: 100%;
+  flex: none;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+/*posts style*/
+div.blog-home2{
+  background-color: hsl(210, 46%, 99%);
+  border-radius: 7px;
+  box-shadow: 10px 33px 91px -23px #b8b8b8;
+}
+
+div.blog-home2 div{
+  color: hsl(217, 19%, 35%);
+}
+
+@media(max-width: 777px){
+  .card .col-md-8{
+    padding: 0;
+  }
+
+}

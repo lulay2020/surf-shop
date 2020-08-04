@@ -1,7 +1,6 @@
 <% if(success && success.length){ %>
-	<h1 class="color-green"><%= success %></h1>
+	<div class="alert alert-success"><%= success %></div>
 <% } %>
-
 <% if(error && error.length){ %>
-	<h1 class="color-red"><%= error %></h1>
+	<div class="alert alert-danger"><%= error %></div>
 <% } %>

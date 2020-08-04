@@ -1,23 +1,96 @@
 <% layout('layouts/boilerplate')-%>
-<h1>Edit post</h1>
-<form method="POST" action="/posts/<%= post.id %>?_method=PUT" enctype="multipart/form-data" id="postEditForm">
-	<input type="text" name="post[title]" value="<%= post.title %>"><br>
-	<input type="number" step=".01" name="post[price]" value="<%= post.price %>"><br>
-	<div>
-		<input type="file" id="imageUpload" accept="images/*" name="images" multiple>
-		<div>
-			<% post.images.forEach((image, i) => { %>
-			<img src="<%= image.url %>" width="50px">
-			<label for="image<%= i %>">Delete?</label>
-			<input type="checkbox" class="imageDeleteCheckbox" id="image<%= i %>" name="deleteImages[]" value="<%= image.public_id %>">
-			<%})%>
+<div class="container form d-flex align-items-center">
+	<div class="card bg-light form-card">
+	  	<% include ../partials/flash-messages %>
+		<div class="row">
+			<div class="col-md-5">
+		        <img src="/images/new.jpeg" class="card-img" alt="sea">
+		        <div class="card-img-overlay d-flex flex-column justify-content-center text-center p-5">
+		        	<h1>Surf Shop</h1>
+		        	<p>A place where you can buy, sell and rent Surf-boards</p>
+		    	</div>
+		    </div>
+		    <div class="col-md-7 d-flex align-items-center">
+		    	<div class="card-body">
+		    		<h1 class="card-title">Edit post</h1>
+					<form 
+						method="POST" 
+						action="/posts/<%= post.id %>?_method=PUT" 
+						enctype="multipart/form-data" 
+						id="postEditForm"
+					>	
+						<div class="form-group">
+							<label for="title">Title</label>
+							<input 
+								type="text" 
+								name="post[title]" 
+								value="<%= post.title %>"
+								id="title"
+								class="form-control"
+							>	
+						</div>
+						<div class="form-group">
+							<label for="description">Description</label>
+							<textarea 
+								name="post[description]"
+								id="description"
+								class="form-control"
+							><%= post.description %></textarea>
+						</div>
+						<div class="form-group">
+							<label for="price">Price</label>
+							<input 
+								type="number" 
+								step=".01" 
+								name="post[price]" 
+								value="<%= post.price %>"
+								id="price"
+								class="form-control"
+							>	
+						</div>
+						<div class="form-group">
+							<label for="location">Location</label>
+							<input 
+								type="text" 
+								name="post[location]" 
+								value="<%= post.location %>"
+								class="form-control"
+							>
+						</div>
+						<div class="form-group">
+							<label for="imageUpload">Images</label>
+							<small>(Only 4 images allowed)</small>
+							<input 
+								type="file" 
+								id="imageUpload" 
+								accept="images/*" 
+								name="images" 
+								multiple
+							>
+							<div>
+								<% post.images.forEach((image, i) => { %>
+								<img src="<%= image.url %>" width="50px">
+								<label for="image<%= i %>">Delete?</label>
+								<input 
+									type="checkbox" 
+									class="imageDeleteCheckbox" 
+									id="image<%= i %>" 
+									name="deleteImages[]" 
+									value="<%= image.public_id %>">
+								<%})%>
+							</div>
+						</div>
+						<div class="my-4">
+							<input 
+								type="submit" 
+								value="Edit!" 
+								class="btn btn-success btn-block"
+							>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
 	</div>
-	<textarea name="post[description]"><%= post.description %></textarea><br>
-	<input type="text" name="post[location]" value="<%= post.location %>"><br>
-
-	<input type="submit">
-</form>
-<script src="/scripts/post-edit.js">
-
-</script>
+</div>
+<script src="/scripts/post-edit.js"></script>

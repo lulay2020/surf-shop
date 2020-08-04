@@ -28,5 +28,5 @@ $('.toggle-edit-form').on('click', function(){
 
 // Add click listener for the clear rating button
 $('.clear-rating').click(function() {
-  $(this).siblings('.input-no-rate').click();
+  $('.input-no-rate').click();
 })
