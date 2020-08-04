@@ -22,7 +22,8 @@ const reviewsRouter = require('./routes/reviews');
 const app = express();
 
 // connect to database
-mongoose.connect('mongodb://localhost:27017/surf-shop', {
+const dbURI = process.env.MONGO_URI;
+mongoose.connect(dbURI, {
 		useNewUrlParser: true, 
 		useUnifiedTopology: true,
     useCreateIndex: true,
@@ -58,7 +59,7 @@ app.locals.moment = require('moment');
 // configuring passport and sessions
 
 app.use(session({
-	secret: 'the secret',
+	secret: process.env.SESSION_SECRET,
 	resave: false,
 	saveUninitialized: true
 }));
