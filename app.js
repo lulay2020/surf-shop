@@ -112,4 +112,7 @@ app.use((err, req, res, next)=> {
   res.redirect('back');
 });
 
+const port = process.env.PORT || 3000;
+app.listen(port)
+
 module.exports = app;
