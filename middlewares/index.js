@@ -43,6 +43,15 @@ const middleware = {
 		res.redirect('back');
 	},
 
+	isVerified: async(req, res, next)=>{
+		const user = await User.findOne({ username: req.body.username });
+		if (user.isVerified) {
+			return next();
+		}
+		req.session.error = 'Your account has not been verified, please check your email to verify your account';
+		return res.redirect('/login');
+	},
+
 	isValidPassword: async (req, res, next) =>{
 		const { user } = await User.authenticate()(req.user.username, req.body.currentPassword);
 		if (user){

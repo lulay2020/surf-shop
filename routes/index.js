@@ -7,6 +7,7 @@ const {
 	landingPage,
 	getRegister, 
 	postRegister,
+	getVerify,
 	getLogin, 
 	postLogin, 
 	getLogout,
@@ -21,24 +22,29 @@ const {
 	asyncErrHandler, 
 	isLoggedIn,
 	isValidPassword,
-	changePassword
+	changePassword,
+	isVerified
 } = require('../middlewares');
 
 /* GET home/landing page. */
 router.get('/', asyncErrHandler(landingPage));
 
 // USER ROUTES
+
 /* GET /register */
 router.get('/register', getRegister);
 
 /* POST /register */
 router.post('/register', upload.single('image'), asyncErrHandler(postRegister));
 
+// GET /email-verify
+router.get('/verify-email', asyncErrHandler(getVerify));
+
 /* GET /login */
 router.get('/login', getLogin);
 
 /* POST /login */
-router.post('/login', asyncErrHandler(postLogin));
+router.post('/login', isVerified, asyncErrHandler(postLogin));
 
 // GET /logout
 router.get('/logout', getLogout);

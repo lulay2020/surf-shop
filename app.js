@@ -1,4 +1,4 @@
-// require('dotenv').config();
+//require('dotenv').config();
 const createError = require('http-errors');
 const express = require('express');
 const engine = require('ejs-mate');
@@ -26,7 +26,7 @@ const dbURI = process.env.MONGO_URI;
 mongoose.connect(dbURI, {
 		useNewUrlParser: true, 
 		useUnifiedTopology: true,
-    useCreateIndex: true,
+    	useCreateIndex: true,
 });
 
 const db = mongoose.connection;

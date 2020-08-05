@@ -28,53 +28,85 @@ module.exports = {
  },
 
  // POST /register
- async postRegister(req, res, next){
-  const { password } = req.body;
-  try{
-    if(req.file){
-      const { secure_url, public_id } = req.file;
-      req.body.image = {secure_url, public_id};
+  async postRegister(req, res, next){
+    const { password } = req.body;
+    const token = await crypto.randomBytes(20).toString('hex');
+    const newUser = {
+      username: req.body.username,
+      email: req.body.email,
+      emailToken: token
     }
-    if (password.length < 6) {
-      req.session.error = 'Password must be six characters or more.'
-      return res.redirect('/register')
+    try{
+      if(req.file){
+        const { secure_url, public_id } = req.file;
+        newUser.image = {secure_url, public_id};
+      }
+      if (password.length < 6) {
+        req.session.error = 'Password must be six characters or more.'
+        return res.redirect('/register')
+      }
+      const user = await User.register(new User(newUser), req.body.password);
+      const msg = {
+        to: req.body.email,
+        from: 'Surf Shop Admin <luluboo2020@gmail.com>',
+        subject: 'Surf Shop - Please verify your email',
+        text: 
+          `Hello,
+          Thank you for registering on Surf Shop, 
+          Please click on the following link, or copy and paste it into your browser to verify your account:
+          http://${req.headers.host}/verify-email?token=${token}`.replace(/        /g, ''),
+      };
+      await sgMail.send(msg);
+      req.session.success = `Thank you for registering, please check your email to verify your account`;
+      res.redirect('/register');
+
+    } catch(err) {
+      deleteProfileImage(req);
+      const { username, email } = req.body;
+      let error = err.message;
+      if (error.includes('duplicate') && error.includes('index: email_1 dup key')){
+        error = 'A user with the given email is already registered';
+      }
+      res.render('register', { title: 'Register', username, email, error});
+    } 
+  },
+
+  // GET /email-verify
+  async getVerify(req, res, next){
+    const user = await User.findOne({ emailToken: req.query.token });
+    if (!user) {
+      req.session.error = 'Verification token is invalid or has expired';
+      return res.redirect('/register');
     }
-    const user = await User.register(new User(req.body), req.body.password);
-    req.login(user, function(err){
+    user.emailToken = null;
+    user.isVerified = true;
+    await user.save();
+    await req.login(user, (err) =>{
     if (err) return next(err);
-      res.redirect('/');
+    res.redirect('/');
     });
-  } catch(err) {
-    deleteProfileImage(req);
-    const { username, email } = req.body;
-    let error = err.message;
-    if (error.includes('duplicate') && error.includes('index: email_1 dup key')){
-      error = 'A user with the given email is already registered';
-    }
+  },
 
-    res.render('register', { title: 'Register', username, email, error});
-  } 
-},
 
- //POST /login
- getLogin(req, res, next){
-  if (req.isAuthenticated()) return res.redirect('/');
-  if (req.query.returnTo) req.session.redirectTo = req.headers.referer;
-  res.render('login', { title: 'Login', username: '', email: '' });
- },
+  //GET /login
+  getLogin(req, res, next){
+    if (req.isAuthenticated()) return res.redirect('/');
+    if (req.query.returnTo) req.session.redirectTo = req.headers.referer;
+    res.render('login', { title: 'Login', username: '', email: '' });
+  },
 
- // POST /login
- async postLogin(req, res, next){
-  const { username, password } = req.body;
-  const { user, error } = await User.authenticate()(username, password);
-  if (!user && error ) return next(error);
-  req.login(user, function(err){
-   if (err) return next(err);
-   const redirectUrl = req.session.redirectTo || '/';
-   delete req.session.redirectTo;
-   res.redirect(redirectUrl);
-  });
- },
+  // POST /login
+  async postLogin(req, res, next){
+    const { username, password } = req.body;
+    const { user, error } = await User.authenticate()(username, password);
+    if (!user && error ) return next(error);
+    req.login(user, function(err){
+      if (err) return next(err);
+      const redirectUrl = req.session.redirectTo || '/';
+      delete req.session.redirectTo;
+      res.redirect(redirectUrl);
+    });
+  },
 
  // GET /logout
  getLogout(req, res, next){
@@ -143,10 +175,9 @@ module.exports = {
  async getReset(req, res, next){
   const { token } = req.params;
   const user = await User.findOne({
-   resetPasswordToken: token,
-   resetPasswordExpires :{ $gt: Date.now() }
+    resetPasswordToken: token,
+    resetPasswordExpires :{ $gt: Date.now() }
   });
-  console.log(token, user);
 
   if (!user) {
    req.session.error = 'Password reset token is invalid or has expired';
