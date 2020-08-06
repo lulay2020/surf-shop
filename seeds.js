@@ -19,7 +19,7 @@ async function seedPosts() {
 			},
 			price: `${random1000}`,
 			avgRating: random5,
-			author: '5f295aef0068900250608c10',
+			author: '5f2ada29f3999b001782d5d9',
 			images: [{
 				url: 'https://res.cloudinary.com/devsprout/image/upload/v1561315599/surf-shop/surfboard.jpg'
 			}]
